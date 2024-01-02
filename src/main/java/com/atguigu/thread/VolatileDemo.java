@@ -1,6 +1,7 @@
 package com.atguigu.thread;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 class MyData {
     volatile int number = 0;
@@ -15,6 +16,11 @@ class MyData {
     public void addPlusPlus() {
         number++;
     }
+
+    AtomicInteger atomicInteger = new AtomicInteger();
+    public void addMyAtomic() {
+        atomicInteger.getAndIncrement();
+    }
 }
 
 public class VolatileDemo {
@@ -24,6 +30,7 @@ public class VolatileDemo {
             new Thread(() -> {
                 for (int j = 1; j <= 1000; j++) {
                     myData.addPlusPlus();
+                    myData.addMyAtomic();
                 }
             }, String.valueOf(i)).start();
         }
@@ -33,7 +40,8 @@ public class VolatileDemo {
             Thread.yield();
         }
 
-        System.out.println(Thread.currentThread().getName() + "\t finally number value: " + myData.number);
+        System.out.println(Thread.currentThread().getName() + "\t int type, finally number value: " + myData.number);
+        System.out.println(Thread.currentThread().getName() + "\t AtomicInteger type finally number value: " + myData.atomicInteger);
     }
 
     /**
