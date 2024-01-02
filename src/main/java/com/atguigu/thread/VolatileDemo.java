@@ -8,10 +8,38 @@ class MyData {
     public void addTo60() {
         this.number = 60;
     }
+
+    /**
+     * 请注意, 此时number前面是加了volatile关键字修饰的, volatile不保证原子性
+     */
+    public void addPlusPlus() {
+        number++;
+    }
 }
 
 public class VolatileDemo {
     public static void main(String[] args) {
+        MyData myData = new MyData();
+        for (int i = 1; i <= 20; i++) {
+            new Thread(() -> {
+                for (int j = 1; j <= 1000; j++) {
+                    myData.addPlusPlus();
+                }
+            }, String.valueOf(i)).start();
+        }
+
+        // 需要等待上面20个线程都全部计算完成后, 再用main线程取的最终的结果值看是多少?
+        while (Thread.activeCount() > 2) {
+            Thread.yield();
+        }
+
+        System.out.println(Thread.currentThread().getName() + "\t finally number value: " + myData.number);
+    }
+
+    /**
+     * volatile可以保证可见性, 及时通知其他线程, 朱物理内存的值已经被修改
+     */
+    private static void seeOKByVolatile() {
         MyData myData = new MyData();
         new Thread(() -> {
             System.out.println(Thread.currentThread().getName() + "\tcome in");
