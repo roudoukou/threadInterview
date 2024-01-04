@@ -1,15 +1,19 @@
 package com.atguigu.thread;
 
 public class SingletonDemo {
-    private static SingletonDemo instance;
+    private volatile static SingletonDemo instance;
 
     private SingletonDemo() {
-        System.out.println(Thread.currentThread().getName() + "\t构造方法SingletonDemo()" );
+        System.out.println(Thread.currentThread().getName() + "\t构造方法SingletonDemo()");
     }
 
-    public synchronized static SingletonDemo getInstance() {
+    public static SingletonDemo getInstance() {
         if (instance == null) {
-            instance = new SingletonDemo();
+            synchronized (SingletonDemo.class) {
+                if (instance == null) {
+                    instance = new SingletonDemo();
+                }
+            }
         }
         return instance;
     }
@@ -23,7 +27,7 @@ public class SingletonDemo {
 */
 
         // 并发多线程后, 情况发生了很大的变化
-        for(int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= 10; i++) {
             new Thread(() -> {
                 SingletonDemo.getInstance();
             }, String.valueOf(i)).start();
