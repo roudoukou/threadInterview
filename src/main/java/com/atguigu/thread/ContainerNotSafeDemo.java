@@ -2,9 +2,22 @@ package com.atguigu.thread;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 public class ContainerNotSafeDemo {
     public static void main(String[] args) {
+        // Set<String> set = new HashSet<>();  // java.util.ConcurrentModificationException
+        Set <String> set = new CopyOnWriteArraySet<>();
+        for(int i = 1; i <= 30; i++) {
+            new Thread(() -> {
+                set.add(UUID.randomUUID().toString().substring(0, 8));
+                System.out.println(set);
+            }, String.valueOf(i)).start();
+        }
+        new HashSet<Integer>().add(1);
+    }
+
+    private static void listNotSafe() {
         // List<String> list = new ArrayList<>(); // ConcurrentModificationException
         // List<String> list = new Vector<>(); // use synchronized
         // List<String> list = Collections.synchronizedList(new ArrayList<>());
