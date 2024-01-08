@@ -31,6 +31,7 @@ public class BlockingQueueDemo {
 
         // 2.阻塞队列-返回布尔值 add element remove
 
+/*
         BlockingQueue<String> blockingQueue = new ArrayBlockingQueue<>(3);
         System.out.println(blockingQueue.offer("a"));
         System.out.println(blockingQueue.offer("b"));
@@ -43,6 +44,20 @@ public class BlockingQueueDemo {
         System.out.println(blockingQueue.poll());
         System.out.println(blockingQueue.poll());
         System.out.println(blockingQueue.poll());
+*/
+
+        // 3.阻塞队列-阻塞 put take
+        BlockingQueue<String> blockingQueue = new ArrayBlockingQueue<>(3);
+        blockingQueue.put("a");
+        blockingQueue.put("b");
+        blockingQueue.put("c");
+        System.out.println("===");
+        // blockingQueue.put("x");
+
+        blockingQueue.take();
+        blockingQueue.take();
+        blockingQueue.take();
+        // blockingQueue.take();
 
 
     }
