@@ -6,11 +6,14 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 public class BlockingQueueDemo {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+
+        // 1.阻塞队列-抛出异常组 add element remove
+
+/*
         // List<String> list = new ArrayList<>();
         BlockingQueue<String> blockingQueue = new ArrayBlockingQueue<>(3);
 
-        // 抛出异常组 add element remove
         System.out.println(blockingQueue.add("a"));
         System.out.println(blockingQueue.add("b"));
         System.out.println(blockingQueue.add("c"));
@@ -24,6 +27,23 @@ public class BlockingQueueDemo {
         System.out.println(blockingQueue.remove());
         // java.util.NoSuchElementException
         // System.out.println(blockingQueue.remove());
+*/
+
+        // 2.阻塞队列-返回布尔值 add element remove
+
+        BlockingQueue<String> blockingQueue = new ArrayBlockingQueue<>(3);
+        System.out.println(blockingQueue.offer("a"));
+        System.out.println(blockingQueue.offer("b"));
+        System.out.println(blockingQueue.offer("c"));
+        System.out.println(blockingQueue.offer("x"));
+
+        System.out.println(blockingQueue.peek());
+
+        System.out.println(blockingQueue.poll());
+        System.out.println(blockingQueue.poll());
+        System.out.println(blockingQueue.poll());
+        System.out.println(blockingQueue.poll());
+
 
     }
 }
