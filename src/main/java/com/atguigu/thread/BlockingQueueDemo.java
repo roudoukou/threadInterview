@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 public class BlockingQueueDemo {
     public static void main(String[] args) throws InterruptedException {
 
         // 1.阻塞队列-抛出异常组 add element remove
-
 /*
         // List<String> list = new ArrayList<>();
         BlockingQueue<String> blockingQueue = new ArrayBlockingQueue<>(3);
@@ -30,7 +30,6 @@ public class BlockingQueueDemo {
 */
 
         // 2.阻塞队列-返回布尔值 add element remove
-
 /*
         BlockingQueue<String> blockingQueue = new ArrayBlockingQueue<>(3);
         System.out.println(blockingQueue.offer("a"));
@@ -47,6 +46,7 @@ public class BlockingQueueDemo {
 */
 
         // 3.阻塞队列-阻塞 put take
+/*
         BlockingQueue<String> blockingQueue = new ArrayBlockingQueue<>(3);
         blockingQueue.put("a");
         blockingQueue.put("b");
@@ -58,7 +58,14 @@ public class BlockingQueueDemo {
         blockingQueue.take();
         blockingQueue.take();
         // blockingQueue.take();
+*/
 
+        // 4.阻塞队列-超时控制
+        BlockingQueue<String> blockingQueue = new ArrayBlockingQueue<>(3);
+        System.out.println(blockingQueue.offer("a", 2L, TimeUnit.SECONDS));
+        System.out.println(blockingQueue.offer("a", 2L, TimeUnit.SECONDS));
+        System.out.println(blockingQueue.offer("a", 2L, TimeUnit.SECONDS));
+        // System.out.println(blockingQueue.offer("a", 2L, TimeUnit.SECONDS));
 
     }
 }
