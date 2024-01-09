@@ -65,8 +65,6 @@ public class ProdConsumer_BlockQueueDemo {
         }, "Prod").start();
         new Thread(() -> {
             System.out.println(Thread.currentThread().getName() + "\t消费线程启动");
-            System.out.println();
-            System.out.println();
             try {
                 myResource.myConsumer();
             } catch (Exception e) {
