@@ -20,6 +20,7 @@ public class MyThreadPoolDemo {
 
         try {
             // 模拟10个用户来办理业务, 每个用户就是一个来自外部的请求线程
+            // 触发拒绝策略的情况: maximumPoolSize + capacity
             for (int i = 1; i <= 10; i++) {
                 threadPool.execute(() -> {
                     System.out.println(Thread.currentThread().getName() + "\t 办理业务");
