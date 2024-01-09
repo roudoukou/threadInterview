@@ -2,6 +2,7 @@ package com.atguigu.thread;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -54,7 +55,8 @@ class MyResource {
 
 public class ProdConsumer_BlockQueueDemo {
     public static void main(String[] args) {
-        MyResource myResource = new MyResource(new ArrayBlockingQueue<>(10));
+        // MyResource myResource = new MyResource(new ArrayBlockingQueue<>(10));
+        MyResource myResource = new MyResource(new LinkedBlockingQueue<>(10)); // 接口参数: 可以传递不同类型的阻塞队列 适配器模式
         new Thread(() -> {
             System.out.println(Thread.currentThread().getName() + "\t生产线程启动");
             try {
