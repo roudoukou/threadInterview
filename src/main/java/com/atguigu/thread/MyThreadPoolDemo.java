@@ -1,12 +1,36 @@
 package com.atguigu.thread;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class MyThreadPoolDemo {
     public static void main(String[] args) {
+        ExecutorService threadPool = new ThreadPoolExecutor(
+                3,
+                5,
+                1L,
+                TimeUnit.SECONDS,
+                new LinkedBlockingQueue<Runnable>(3),
+                Executors.defaultThreadFactory(),
+                // new ThreadPoolExecutor.AbortPolicy() // java.util.RejectedExecutionException
+                // new ThreadPoolExecutor.CallerRunsPolicy() // 将多余的任务退回给调用者(此时的调用者是main)
+                // new ThreadPoolExecutor.DiscardOldestPolicy() // 丢弃等待最长时间的任务
+                new ThreadPoolExecutor.DiscardPolicy() // 丢弃
+
+                );
+
+        try {
+            // 模拟10个用户来办理业务, 每个用户就是一个来自外部的请求线程
+            for (int i = 1; i <= 10; i++) {
+                threadPool.execute(() -> {
+                    System.out.println(Thread.currentThread().getName() + "\t 办理业务");
+                });
+            }
+        } finally {
+            threadPool.shutdown();
+        }
+    }
+
+    private static void threadPoolInit() {
         // 获取电脑CPU核数
         // System.out.println(Runtime.getRuntime().availableProcessors());
 
